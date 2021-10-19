@@ -4,13 +4,13 @@ using System.Numerics;
 
 namespace Lab1V1
 {
-		static class VectorMethods
+	static class VectorMethods
     {
         public static double ComplexModule(double real, double image)
         {
             return Math.Sqrt(Math.Pow(real, 2) + Math.Pow(image, 2));
         }
-		}
+	}
 
     struct DataItem
     {
@@ -21,22 +21,22 @@ namespace Lab1V1
         {
             this.x = x;
             this.y = y;
-						this.value = value;
+			this.value = value;
         }
         public string ToLongString(string format)
         {
             return String.Format(format, x, y, value.Real, value.Imaginary, 
-																	VectorMethods.ComplexModule(value.Real, value.Imaginary));
+									VectorMethods.ComplexModule(value.Real, value.Imaginary));
         }
         public override string ToString()
         {
             return String.Format("X {0:f2} Y {1:f2} F_X {2:f2} F_Y {3:f2} |F| {4:f2}", 
-																	x, y, value.Real, value.Imaginary,
-																	VectorMethods.ComplexModule(value.Real, value.Imaginary));
+									x, y, value.Real, value.Imaginary,
+									VectorMethods.ComplexModule(value.Real, value.Imaginary));
         }
     }
 
-		delegate Complex FdlbComplex(double x, double y);
+	delegate Complex FdlbComplex(double x, double y);
 
     abstract class V1Data
     {
@@ -102,7 +102,7 @@ namespace Lab1V1
                 double averageValue = 0;
                 foreach (DataItem item in DataList)
                 {
-										averageValue += VectorMethods.ComplexModule(item.value.Real, item.value.Imaginary);
+					averageValue += VectorMethods.ComplexModule(item.value.Real, item.value.Imaginary);
                 }
                 return averageValue / Count;
             }
@@ -111,19 +111,19 @@ namespace Lab1V1
         public override string ToLongString(string format)
         {
             string str1 = String.Format(" Class:{0}\n object_id:{1}\n Count:{2}\n",
-																					"V1DataList", object_id, Count) + '\n';
+										    "V1DataList", object_id, Count) + '\n';
             string str2 = "";
             foreach (DataItem item in DataList)
             {
                 str2 += string.Format(format, item.x, item.y, 
-																				VectorMethods.ComplexModule(item.value.Real, item.value.Imaginary));
+										VectorMethods.ComplexModule(item.value.Real, item.value.Imaginary));
             }
             return str1 + str2;
         }
         public override string ToString()
         {
             return String.Format(" Class:{0}\n object_id:{1}\n Count:{2}\n", 
-																	"V1DataList", object_id, Count) + '\n';
+									"V1DataList", object_id, Count) + '\n';
         }
 
     }
@@ -131,8 +131,8 @@ namespace Lab1V1
 
     class V1DataArray : V1Data
     {
-				public int xNodes { get; }
-				public int yNodes { get; }
+		public int xNodes { get; }
+		public int yNodes { get; }
         public double xSteps { get; }
         public double ySteps { get; }
         public Complex Step { get; }
@@ -143,10 +143,10 @@ namespace Lab1V1
             array = new Complex[0, 0];
         }
         public V1DataArray(string object_id, DateTime data, int xNodes, int yNodes, 
-													 double xSteps, double ySteps, FdlbComplex F) : base(object_id, data)
+							double xSteps, double ySteps, FdlbComplex F) : base(object_id, data)
         {
-						this.xNodes = xNodes;
-						this.yNodes = yNodes;
+			this.xNodes = xNodes;
+			this.yNodes = yNodes;
             this.xSteps = xSteps;
             this.ySteps = ySteps;
             array = new Complex[xNodes, yNodes];
@@ -166,7 +166,7 @@ namespace Lab1V1
             }
         }
 				
-				public override double AverageValue
+		public override double AverageValue
         {
             get
             {
@@ -175,8 +175,8 @@ namespace Lab1V1
                 {
                     for (int j = 0; j < yNodes; j++)
                     {
-												averageValue += VectorMethods.ComplexModule(array[i, j].Real, array[i, j].Imaginary); 
-										}
+						averageValue += VectorMethods.ComplexModule(array[i, j].Real, array[i, j].Imaginary); 
+					}
                 }
 
                 return averageValue / Count;
@@ -186,23 +186,23 @@ namespace Lab1V1
         public override string ToString()
         {
             return String.Format(" Class:{0}\n object_id:{1}\n xNodes:{2}\n yNodes:{3}\n ySteps:{4}\n xSteps:{5}\n", 
-																					"V1DataArray", object_id, xNodes, yNodes, xSteps, ySteps) + '\n';
+									"V1DataArray", object_id, xNodes, yNodes, xSteps, ySteps) + '\n';
         }
 				
-				public override string ToLongString(string format)
+		public override string ToLongString(string format)
         {
             string str1 = String.Format(" Class:{0}\n object_id:{1}\n xNodes:{2}\n yNodes:{3}\n ySteps:{4}\n xSteps:{5}\n", 
-																					"V1DataArray", object_id, xNodes, yNodes, xSteps, ySteps) + '\n';
+										    "V1DataArray", object_id, xNodes, yNodes, xSteps, ySteps) + '\n';
             string str2 = "";
             for (int i = 0; i < xNodes; i++)
             {
                 for (int j = 0; j < yNodes; j++)
                 {
                     str2 += String.Format(format, i * xNodes, j * yNodes, 
-																						VectorMethods.ComplexModule(array[i,j].Real, array[i, j].Imaginary));
+											VectorMethods.ComplexModule(array[i,j].Real, array[i, j].Imaginary));
                 }
             }	
-						str1 += str2;
+			str1 += str2;
             return str1;
         }
 
@@ -214,7 +214,7 @@ namespace Lab1V1
                 for (int j = 0; j < yNodes; j++)
                 {
                     double x = i * xNodes;
-										double y = j * yNodes;
+					double y = j * yNodes;
                     Complex value = array[i, j];
                     DataItem item = new DataItem(x, y, value);
                     DataList.Add(item);
@@ -268,7 +268,7 @@ namespace Lab1V1
             return str1;
         }
 				
-				public string ToString()
+		public override string ToString()
 				{
             string str1 = "";
             foreach (V1Data item in Collection)
@@ -291,28 +291,28 @@ namespace Lab1V1
     {
         static void Main(string[] args)
         {
-						const int xnode = 5;
-						const int ynode = 5;
-						const int xstep = 1;
-						const int ystep = 1;
+			const int xnode = 5;
+			const int ynode = 5;
+			const int xstep = 1;
+			const int ystep = 1;
             V1DataArray arr = new V1DataArray("V1DateArray", new DateTime(1, 1, 1),
-																								xnode, ynode, xstep, ystep, Methods.F);
+												xnode, ynode, xstep, ystep, Methods.F);
             Console.WriteLine(arr.ToLongString("{0:f2} {1:f2} {2:f2} \n"));
-						Console.WriteLine("Count {0} AverageValue {1:f2}\n", arr.Count, arr.AverageValue);
+			Console.WriteLine("Count {0} AverageValue {1:f2}\n", arr.Count, arr.AverageValue);
 						
             V1DataList list = arr.ArrayToList();
             Console.WriteLine(list.ToLongString("{0:f2} {1:f2} {2:f2} \n"));
-						Console.WriteLine("Count {0} AverageValue {1:f2}\n", list.Count, list.AverageValue);
+			Console.WriteLine("Count {0} AverageValue {1:f2}\n", list.Count, list.AverageValue);
 
             V1MainCollection collection = new V1MainCollection();
             collection.Add(list);
-						collection.Add(arr);
+			collection.Add(arr);
             Console.WriteLine(collection.ToLongString("{0:f2} {1:f2} {2:f2} \n"));
 
             for (int i = 0; i < collection.Count(); i++)
             {
                 Console.WriteLine("Count {0:f2} AverageValue {1:f2}", 
-																		collection[i].Count, collection[i].AverageValue);
+									collection[i].Count, collection[i].AverageValue);
             }
 						
 
