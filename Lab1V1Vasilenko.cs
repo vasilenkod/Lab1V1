@@ -30,9 +30,7 @@ namespace Lab1V1
         }
         public override string ToString()
         {
-            return String.Format("X {0:f2} Y {1:f2} F_X {2:f2} F_Y {3:f2} |F| {4:f2}", 
-				    x, y, value.Real, value.Imaginary,
-				    VectorMethods.ComplexModule(value.Real, value.Imaginary));
+            return ToLongString("x {0:f2} y {1:f2} xValue {2:f2} yValue {3:f2} module {4:f2}");
         }
     }
 
