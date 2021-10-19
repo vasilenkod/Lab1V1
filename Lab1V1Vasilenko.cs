@@ -99,6 +99,9 @@ namespace Lab1V1
         {
             get
             {
+                if (Count == 0) {
+                    return 0;
+                }
                 double averageValue = 0;
                 foreach (DataItem item in DataList)
                 {
@@ -115,7 +118,7 @@ namespace Lab1V1
             string str2 = "";
             foreach (DataItem item in DataList)
             {
-                str2 += string.Format(format, item.x, item.y, 
+                str2 += string.Format(format, item.x, item.y, item.value.Real, item.value.Imaginary,
 										VectorMethods.ComplexModule(item.value.Real, item.value.Imaginary));
             }
             return str1 + str2;
@@ -185,21 +188,21 @@ namespace Lab1V1
 
         public override string ToString()
         {
-            return String.Format(" Class:{0}\n object_id:{1}\n xNodes:{2}\n yNodes:{3}\n ySteps:{4}\n xSteps:{5}\n", 
+            return String.Format(" Class:{0}\n object_id:{1}\n xNodes:{2} yNodes:{3} xSteps:{4} ySteps:{5} Module\n", 
 									"V1DataArray", object_id, xNodes, yNodes, xSteps, ySteps) + '\n';
         }
 				
 		public override string ToLongString(string format)
         {
-            string str1 = String.Format(" Class:{0}\n object_id:{1}\n xNodes:{2}\n yNodes:{3}\n ySteps:{4}\n xSteps:{5}\n", 
+            string str1 = String.Format(" Class:{0}\n object_id:{1}\n xNodes:{2} yNodes:{3} xSteps:{4} ySteps:{5} Module\n", 
 										    "V1DataArray", object_id, xNodes, yNodes, xSteps, ySteps) + '\n';
             string str2 = "";
             for (int i = 0; i < xNodes; i++)
             {
                 for (int j = 0; j < yNodes; j++)
                 {
-                    str2 += String.Format(format, i * xNodes, j * yNodes, 
-											VectorMethods.ComplexModule(array[i,j].Real, array[i, j].Imaginary));
+                    str2 += String.Format(format, i * xNodes, j * yNodes, array[i,j].Real, 
+											array[i,j].Imaginary, VectorMethods.ComplexModule(array[i,j].Real, array[i, j].Imaginary));
                 }
             }	
 			str1 += str2;
@@ -295,19 +298,19 @@ namespace Lab1V1
 			const int ynode = 5;
 			const int xstep = 1;
 			const int ystep = 1;
-            V1DataArray arr = new V1DataArray("V1DateArray", new DateTime(1, 1, 1),
+             V1DataArray arr = new V1DataArray("V1DateArray", new DateTime(1, 1, 1),
 												xnode, ynode, xstep, ystep, Methods.F);
-            Console.WriteLine(arr.ToLongString("{0:f2} {1:f2} {2:f2} \n"));
+            Console.WriteLine(arr.ToLongString("{0:f2}\t {1:f2}\t {2:f2}\t {3:f2}\t {4:f2} \n"));
 			Console.WriteLine("Count {0} AverageValue {1:f2}\n", arr.Count, arr.AverageValue);
 						
             V1DataList list = arr.ArrayToList();
-            Console.WriteLine(list.ToLongString("{0:f2} {1:f2} {2:f2} \n"));
+            Console.WriteLine(list.ToLongString("{0:f2}\t {1:f2}\t {2:f2}\t {3:f2}\t {4:f2} \n"));
 			Console.WriteLine("Count {0} AverageValue {1:f2}\n", list.Count, list.AverageValue);
 
             V1MainCollection collection = new V1MainCollection();
             collection.Add(list);
 			collection.Add(arr);
-            Console.WriteLine(collection.ToLongString("{0:f2} {1:f2} {2:f2} \n"));
+            Console.WriteLine(collection.ToLongString("{0:f2}\t {1:f2}\t {2:f2}\t {3:f2}\t {4:f2} \n"));
 
             for (int i = 0; i < collection.Count(); i++)
             {
